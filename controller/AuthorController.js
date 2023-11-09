@@ -8,8 +8,8 @@ const {
 } = require('../traits/ApiResponse')
 
 
-const getUsers = (req, res) => {
-    const query = "SELECT * FROM users"
+const getAuthors = (req, res) => {
+    const query = "SELECT * FROM author"
 
     pool.getConnection((err, connection) => {
         if (err) throw err
@@ -17,16 +17,16 @@ const getUsers = (req, res) => {
         connection.query(query, (err, results) => {
             if(err) throw err
             
-            responseSuccess(res, results, 'users succesfully fetched')
+            responseSuccess(res, results, 'author succesfully fetched')
         })
         connection.release()
     })
 }
 
-const getUser = (req, res) => {
+const getAuthor = (req, res) => {
     const id = req.params.id
     
-    const query = `SELECT * FROM users WHERE id=${id}`
+    const query = `SELECT * FROM author WHERE id=${id}`
     pool.getConnection((err, connection) => {
         if(err) throw err
 
@@ -37,13 +37,13 @@ const getUser = (req, res) => {
                 responseNotFound(res)
                 return
             }
-            responseSuccess(res,results,'users successfully fetched')
+            responseSuccess(res,results,'author successfully fetched')
         })
         connection.release()
     })
 }
 
-const addUser = (req, res) => {
+const addAuthor = (req, res) => {
     const data = {
         nama: req.body.nama,
         email: req.body.email,
@@ -51,21 +51,21 @@ const addUser = (req, res) => {
         umur: req.body.umur,
         media_social: req.body.media_social
     }
-    const query = `INSERT INTO users SET ?`
+    const query = `INSERT INTO author SET ?`
 
     pool.getConnection((err, connection) => {
         if(err) throw err
 
         connection.query(query, [data], (err, results) => {
             if(err) throw err
-            responseSuccess(res, results, 'users successfully added')
+            responseSuccess(res, results, 'author successfully added')
         })
 
         connection.release()
     })
 }
 
-const updateUser = (req,res) => {
+const updateAuthor = (req,res) => {
     const id = req.params.id
 
     const data = {
@@ -76,7 +76,7 @@ const updateUser = (req,res) => {
         media_social: req.body.media_social
     }
 
-    const query = `UPDATE users SET ? WHERE id=${id}`
+    const query = `UPDATE author SET ? WHERE id=${id}`
     pool.getConnection((err, connection) => {
         if(err) throw err
 
@@ -87,17 +87,17 @@ const updateUser = (req,res) => {
                 responseNotFound(res)
                 return
             }
-            responseSuccess(res,results, 'users succesfully updated')
+            responseSuccess(res,results, 'author succesfully updated')
         })
         connection.release()
     })
     
 }
 
-const deleteUser = (req,res)=>{
+const deleteAuthor = (req,res)=>{
     const id = req.params.id
 
-    const query = `DELETE FROM users WHERE id=${id}`
+    const query = `DELETE FROM author WHERE id=${id}`
 
     pool.getConnection((err, connection) => {
         if(err) throw err
@@ -109,15 +109,15 @@ const deleteUser = (req,res)=>{
                 responseNotFound(res)
                 return
             }
-            responseSuccess(res,results, 'users succesfully deleted')
+            responseSuccess(res,results, 'author succesfully deleted')
         })
         connection.release()
     })
 }
 module.exports = {
-    getUsers,
-    getUser,
-    addUser,
-    updateUser,
-    deleteUser
+    getAuthors,
+    getAuthor,
+    addAuthor,
+    updateAuthor,
+    deleteAuthor
 }

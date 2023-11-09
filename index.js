@@ -1,6 +1,6 @@
 const express = require('express')
 const mysql = require('mysql2')
-const userRoute = require('./routes/user')
+const authorsRoute = require('./routes/authors')
 const authorRoute = require('./routes/author')
 const dbConfig = require('./config/database')
 const pool = mysql.createPool(dbConfig)
@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
     res.end()
 })
 
-app.use('/user', userRoute)
+app.use('/authors', authorsRoute)
 app.use('/author', authorRoute)
 
 app.listen(PORT, () => {
